@@ -1,6 +1,6 @@
 # Ban X/Twitter
 
-![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX)
+![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
 
 ![Ban X - Banner](https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X_Twitter%20-%20GitHub%20Preview.jpg?raw=true)
 
