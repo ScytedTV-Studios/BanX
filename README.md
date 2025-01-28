@@ -1,6 +1,6 @@
 # Ban X/Twitter
 
-![Wrapper](https://img.shields.io/badge/wrapper-discord.js-8A2BE2) ![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
+![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Wrapper](https://img.shields.io/badge/wrapper-discord.js-8A2BE2) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
 
 ![Ban X - Banner](https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X_Twitter%20-%20GitHub%20Preview.jpg?raw=true)
 
