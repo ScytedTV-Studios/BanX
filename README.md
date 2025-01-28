@@ -8,6 +8,10 @@ Easily protect your servers against **X**/**Twitter** URLs.
 
 This is a harm-free way to keep your server safe. It doesn't kick or ban users for posting these links, it instead deletes their message and lets them know why it was harmful.
 
+## Invite The Bot
+
+You can invite the bot to your Discord Server with this URL: https://discord.com/oauth2/authorize?client_id=1333586687724355759
+
 ## Domain List
 
 You can find the list of domains currently blocked by **Ban X** in [DOMAINS.txt](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS.txt).
@@ -20,7 +24,3 @@ You can add a domain for any of the following reasons:
 - The domain embeds X/Twitter posts.
 - The domain hosts CSAM or other dangerous content.
 - The domain hosts illegal or otherwise harmful content.
-
-## Invite The Bot
-
-You can invite the bot to your Discord Server with this URL: https://discord.com/oauth2/authorize?client_id=1333586687724355759
