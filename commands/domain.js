@@ -36,9 +36,10 @@ module.exports = {
         const subcommand = interaction.options.getSubcommand();
 
         if (subcommand === "list") {
+            await interaction.deferReply();
             try {
                 if (!fs.existsSync(filePath) || fs.readFileSync(filePath, "utf8").trim() === "") {
-                    return interaction.reply({
+                    return interaction.editReply({
                         embeds: [
                             new EmbedBuilder()
                                 .setColor("Red")
@@ -53,7 +54,7 @@ module.exports = {
                     .filter(domain => domain.length > 0)
                     .join("\`, \`");
 
-                return interaction.reply({
+                return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Green")
@@ -61,7 +62,7 @@ module.exports = {
                     ]
                 });
             } catch (error) {
-                return interaction.reply({
+                return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Red")
@@ -72,9 +73,10 @@ module.exports = {
         }
 
         if (subcommand === "add") {
+            await interaction.deferReply();
             try {
                 if (interaction.user.id !== ALLOWED_USER_ID) {
-                    return interaction.reply({
+                    return interaction.editReply({
                         embeds: [
                             new EmbedBuilder()
                                 .setColor("Red")
@@ -86,7 +88,7 @@ module.exports = {
                 const domain = interaction.options.getString("domain").trim();
 
                 if (!/^[a-zA-Z0-9.-]+$/.test(domain)) {
-                    return interaction.reply({
+                    return interaction.editReply({
                         embeds: [
                             new EmbedBuilder()
                                 .setColor("Red")
@@ -98,7 +100,7 @@ module.exports = {
                 if (fs.existsSync(filePath)) {
                     const domains = fs.readFileSync(filePath, "utf8").trim().split("\n").map(d => d.trim());
                     if (domains.includes(domain)) {
-                        return interaction.reply({
+                        return interaction.editReply({
                             embeds: [
                                 new EmbedBuilder()
                                     .setColor("Red")
@@ -110,7 +112,7 @@ module.exports = {
 
                 fs.appendFileSync(filePath, `\n${domain}`);
 
-                return interaction.reply({
+                return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Green")
@@ -118,7 +120,7 @@ module.exports = {
                     ]
                 });
             } catch (error) {
-                return interaction.reply({
+                return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Red")
@@ -129,9 +131,10 @@ module.exports = {
         }
 
         if (subcommand === "remove") {
+            await interaction.deferReply();
             try {
                 if (interaction.user.id !== ALLOWED_USER_ID) {
-                    return interaction.reply({
+                    return interaction.editReply({
                         embeds: [
                             new EmbedBuilder()
                                 .setColor("Red")
@@ -143,7 +146,7 @@ module.exports = {
                 const domain = interaction.options.getString("domain").trim();
 
                 if (!fs.existsSync(filePath) || fs.readFileSync(filePath, "utf8").trim() === "") {
-                    return interaction.reply({
+                    return interaction.editReply({
                         embeds: [
                             new EmbedBuilder()
                                 .setColor("Red")
@@ -158,7 +161,7 @@ module.exports = {
                     .filter(d => d.length > 0);
 
                 if (!domains.includes(domain)) {
-                    return interaction.reply({
+                    return interaction.editReply({
                         embeds: [
                             new EmbedBuilder()
                                 .setColor("Red")
@@ -170,7 +173,7 @@ module.exports = {
                 domains = domains.filter(d => d !== domain);
                 fs.writeFileSync(filePath, domains.join("\n"));
 
-                return interaction.reply({
+                return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Green")
@@ -178,7 +181,7 @@ module.exports = {
                     ]
                 });
             } catch (error) {
-                return interaction.reply({
+                return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Red")
