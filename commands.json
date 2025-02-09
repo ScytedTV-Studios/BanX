@@ -2,5 +2,9 @@
     {
         "name": "help",
         "description": "Shows a list of commands."
+    },
+    {
+        "name": "domain list",
+        "description": "Lists all blocked domains."
     }
 ]
