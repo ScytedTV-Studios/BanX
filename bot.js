@@ -53,20 +53,23 @@ function loadDomains() {
 }
 
 function containsBannedDomain(content, domains) {
-    return domains.some((domain) => content.toLowerCase().includes(domain.toLowerCase()));
+    return domains.filter(domain => {
+        const domainPattern = new RegExp(`(?:^|[\\s\\[\\]()<>.,!?\"'])${domain.replace(/\./g, "\\.")}(?:$|[\\s\\[\\]()<>.,!?\"'])`, "i");
+        return domainPattern.test(content);
+    });
 }
 
 client.on("messageCreate", async (message) => {
     if (message.author.bot || !message.guild) return;
 
     const domains = loadDomains();
+    const matchedDomains = containsBannedDomain(message.content, domains);
 
-    if (containsBannedDomain(message.content, domains)) {
-
+    if (matchedDomains.length > 0) {
         await message.delete();
 
         const channelEmbed = new EmbedBuilder()
-            .setDescription(`<@${message.author.id}> your message has been deleted for containing \`${domains.filter((domain) => message.content.toLowerCase().includes(domain.toLowerCase())).join("\`**,** \`")}\`.`)
+            .setDescription(`<@${message.author.id}> your message has been deleted for containing \`${matchedDomains.join("\`**,** \`")}\`.`)
             .setColor("#ff5050");
 
         const warningMessage = await message.channel.send({ embeds: [channelEmbed] });
@@ -75,7 +78,7 @@ client.on("messageCreate", async (message) => {
         const dmEmbed = new EmbedBuilder()
             .setTitle("Your message was deleted")
             .setDescription(
-                `\`\`\`${message.content}\`\`\`\n**Your message contained** \`${domains.filter((domain) => message.content.toLowerCase().includes(domain.toLowerCase())).join("\`**,** \`")}\`**.**`)
+                `\`\`\`${message.content}\`\`\`\n**Your message contained** \`${matchedDomains.join("\`**,** \`")}\`**.**`)
             .setColor("#ff5050");
 
         const serverButton = new ButtonBuilder()
@@ -125,8 +128,9 @@ client.on("interactionCreate", async interaction => {
         try {
             await command.execute(interaction);
         } catch (error) {
+            await interaction.deferReply();
             console.error(error);
-            await interaction.reply({ content: "An error occurred while executing this command.", ephemeral: true });
+            await interaction.editReply({ content: "An error occurred while executing this command.", ephemeral: true });
         }
     }
 });
