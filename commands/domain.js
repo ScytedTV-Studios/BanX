@@ -15,7 +15,7 @@ module.exports = {
         )
         .addSubcommand(subcommand =>
             subcommand.setName("add")
-                .setDescription("Adds a domain to the blocked list.")
+                .setDescription("Adds a domain to the global block list. | Bot Admin Only")
                 .addStringOption(option =>
                     option.setName("domain")
                         .setDescription("The domain to block.")
@@ -24,7 +24,7 @@ module.exports = {
         )
         .addSubcommand(subcommand =>
             subcommand.setName("remove")
-                .setDescription("Removes a domain from the blocked list.")
+                .setDescription("Removes a domain from the global block list. | Bot Admin Only")
                 .addStringOption(option =>
                     option.setName("domain")
                         .setDescription("The domain to remove.")
