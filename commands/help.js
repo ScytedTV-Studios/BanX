@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const commandsList = require("../commands.json");
+const commandsList = require("../config/commands.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,7 +14,7 @@ module.exports = {
             .setColor("#ff5050");
 
         for (const cmd of commandsList) {
-            embed.addFields({ name: `/${cmd.name}`, value: cmd.description, inline: false });
+            embed.addFields({ name: `${cmd.name}`, value: cmd.description, inline: false });
         }
 
         await interaction.reply({ embeds: [embed] });
