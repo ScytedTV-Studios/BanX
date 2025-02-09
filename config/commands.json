@@ -9,7 +9,7 @@
     },
     {
         "name": "</domain list:1337976799858266154>",
-        "description": "Lists all blocked domains."
+        "description": "Lists all globally blocked domains."
     },
     {
         "name": "</domain add:1337976799858266154>",
