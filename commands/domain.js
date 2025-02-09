@@ -58,7 +58,6 @@ module.exports = {
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Green")
-                            .setTitle("Banned Domains")
                             .setDescription(`\`${domains}\``)
                     ]
                 });
