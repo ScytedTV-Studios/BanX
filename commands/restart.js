@@ -8,9 +8,10 @@ module.exports = {
         .setDescription("Restarts the bot."),
 
     async execute(interaction) {
+        await interaction.deferReply();
         try {
             if (interaction.user.id !== ALLOWED_USER_ID) {
-                return interaction.reply({
+                return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Red")
@@ -19,7 +20,7 @@ module.exports = {
                 });
             }
 
-            await interaction.reply({
+            await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor("Green")
@@ -30,7 +31,7 @@ module.exports = {
             process.exit(1);
 
         } catch (error) {
-            return interaction.reply({
+            return interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setColor("Red")
