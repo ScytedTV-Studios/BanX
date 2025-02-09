@@ -58,7 +58,8 @@ module.exports = {
                     embeds: [
                         new EmbedBuilder()
                             .setColor("Green")
-                            .setDescription(`<:checkmark:1330976666016550932> \`${domains}\``)
+                            .setTitle("Banned Domains")
+                            .setDescription(`\`${domains}\``)
                     ]
                 });
             } catch (error) {
