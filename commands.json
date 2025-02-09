@@ -1,6 +1,6 @@
 [
     {
         "name": "help",
-        "description": "Shows a test."
+        "description": "Shows a list of commands."
     }
 ]
