@@ -9,8 +9,8 @@ module.exports = {
     async execute(interaction) {
         const embed = new EmbedBuilder()
             .setTitle("Help Menu")
-            .setDescription("Here are the available commands:")
-            .setColor("#5865F2");
+            .setDescription("**Ban X** will automatically delete messages that contain URLs known to link to **X** (formerly **Twitter**). This may additionally support URLs that **share the same values** as the **X** platform.")
+            .setColor("green");
 
         for (const cmd of commandsList) {
             embed.addFields({ name: `/${cmd.name}`, value: cmd.description, inline: false });
