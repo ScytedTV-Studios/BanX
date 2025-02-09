@@ -5,7 +5,7 @@ const ALLOWED_USER_ID = "852572302590607361";
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("restart")
-        .setDescription("Restarts the bot."),
+        .setDescription("Restarts the bot. | Bot Admin Only"),
 
     async execute(interaction) {
         await interaction.deferReply();
