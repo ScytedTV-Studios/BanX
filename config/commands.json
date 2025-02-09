@@ -4,6 +4,10 @@
         "description": "Shows a list of commands."
     },
     {
+        "name": "</invite:1337989382484922369>",
+        "description": "Invite the bot to your server."
+    },
+    {
         "name": "</domain list:1337976799858266154>",
         "description": "Lists all blocked domains."
     },
