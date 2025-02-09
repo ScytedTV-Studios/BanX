@@ -8,7 +8,7 @@ module.exports = {
     
     async execute(interaction) {
         const embed = new EmbedBuilder()
-            .setTitle("Ban X")
+            .setTitle("Help | Ban X")
             .setThumbnail("https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X_Twitter%20-%20Logo.jpg?raw=true")
             .setDescription("**Ban X** will automatically delete messages that contain URLs known to link to **X** (formerly **Twitter**). This may additionally support URLs that **share the same values** as the **X** platform.")
             .setColor("#ff5050");
