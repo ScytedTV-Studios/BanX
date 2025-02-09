@@ -13,10 +13,14 @@
     },
     {
         "name": "</domain add:1337976799858266154>",
-        "description": "Adds a domain to the blocked list."
+        "description": "Adds a domain to the global block list. | Bot Admin Only"
     },
     {
         "name": "</domain remove:1337976799858266154>",
-        "description": "Removes a domain from the blocked list."
+        "description": "Removes a domain from the global block list. | Bot Admin Only"
+    },
+    {
+        "name": "</restart:1337976799858266154>",
+        "description": "Restarts the bot. | Bot Admin Only"
     }
 ]
