@@ -8,8 +8,8 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
         const embed = new EmbedBuilder()
-        .setColor("Green")
-        .setDescription(`<:checkmark:1330976666016550932> Invite **Ban X**`);
+        .setColor("#ff5050")
+        .setDescription(`Invite **Ban X** to your server!`);
 
         const serverButton = new ButtonBuilder()
             .setLabel("Invite")
