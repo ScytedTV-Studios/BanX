@@ -9,6 +9,7 @@ module.exports = {
         .setName("custom")
         .setDescription("Manage custom blocked domains")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+        .setDMPermission(false)
         .addSubcommand(subcommand =>
             subcommand
                 .setName("add")
