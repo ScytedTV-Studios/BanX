@@ -57,8 +57,8 @@ module.exports = {
                 return interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor("Green")
-                            .setDescription(`<:checkmark:1330976666016550932> **Banned Domains**\n\`${domains}\`\n-# These domains are banned globally in all servers that use **Ban X**.`)
+                            .setColor("#ff5050")
+                            .setDescription(`**Banned Domains**\n-# These domains are banned globally in all servers that use **Ban X**.\n\`${domains}\`\n-# This does not include custom or block list domains.`)
                     ]
                 });
             } catch (error) {
