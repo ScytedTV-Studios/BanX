@@ -1,6 +1,6 @@
 # Ban X/Twitter
 
-![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Wrapper](https://img.shields.io/badge/wrapper-discord.js-5865F2) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
+![Latest Release](https://img.shields.io/github/release/ScytedTV-Studios/BanX) ![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Wrapper](https://img.shields.io/badge/wrapper-discord.js-5865F2) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
 
 ![Ban X - Banner](https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X_Twitter%20-%20GitHub%20Preview.jpg?raw=true)
 
@@ -16,7 +16,7 @@ You can invite the bot to your Discord Server with this URL: https://discord.com
 
 ## Domain List
 
-You can find the list of domains currently blocked by **Ban X** in [DOMAINS.txt](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS.txt).
+You can find the list of domains currently blocked globally by **Ban X** in [DOMAINS.txt](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS.txt).
 
 ## Contributions
 
