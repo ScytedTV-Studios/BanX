@@ -24,7 +24,7 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                         .setColor("Green")
-                        .setDescription("<:checkmark:1330976666016550932> `bot restarting...`")
+                        .setDescription("<:checkmark:1330976666016550932> `Bot restarting...`")
                 ]
             });
 
