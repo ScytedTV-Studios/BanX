@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Client, GatewayIntentBits, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ActivityType, REST, Routes, Collection } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
 const client = new Client({
     intents: [
@@ -12,8 +13,25 @@ const client = new Client({
     ],
 });
 
-client.on("ready", () => {
+const SCYTEDTV_API = process.env.SCYTEDTV_API;
+const BASE_API_URL = "https://api.scyted.tv/v2/banx/settings/";
+const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
+
+const CATEGORY_FILES = {
+    fakenews: "DOMAINS_FAKENEWS.txt",
+    gambling: "DOMAINS_GAMBLING.txt",
+    nsfw: "DOMAINS_NSFW.txt",
+    scams: "DOMAINS_SCAMS.txt",
+    social: "DOMAINS_SOCIAL.txt"
+};
+
+const serverSettingsCache = new Map();
+const customDomainsCache = new Map();
+
+client.on("ready", async () => {
     console.log(`Logged in as ${client.user.tag}`);
+    await cacheServerSettings();
+    await cacheCustomDomains();
     updateStatus();
     setInterval(updateStatus, 20000);
 });
@@ -41,13 +59,73 @@ function updateStatus() {
     }
 }
 
-function loadDomains() {
-    const filePath = path.resolve(__dirname, "DOMAINS.txt");
+async function fetchServerSettings(guildId) {
+    try {
+        const response = await axios.get(`${BASE_API_URL}${guildId}`, {
+            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        });
+        serverSettingsCache.set(guildId, response.data);
+        return response.data;
+    } catch (error) {
+        if (serverSettingsCache.has(guildId)) {
+            return serverSettingsCache.get(guildId);
+        }
+        console.error(`Error fetching settings for ${guildId}:`, error.message);
+        return null;
+    }
+}
+
+async function fetchCustomDomains(guildId) {
+    try {
+        const response = await axios.get(`${CUSTOM_DOMAINS_API}${guildId}`, {
+            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        });
+        customDomainsCache.set(guildId, response.data);
+        return response.data;
+    } catch (error) {
+        if (error.response?.status === 404) {
+            await axios.post(`${CUSTOM_DOMAINS_API}${guildId}`, [], {
+                headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+            });
+            customDomainsCache.set(guildId, []);
+            return [];
+        }
+
+        if (customDomainsCache.has(guildId)) {
+            return customDomainsCache.get(guildId);
+        }
+        console.error(`Error fetching custom domains for ${guildId}:`, error.message);
+        return [];
+    }
+}
+
+async function cacheServerSettings() {
+    const guilds = client.guilds.cache.map(guild => guild.id);
+    for (const guildId of guilds) {
+        await fetchServerSettings(guildId);
+    }
+}
+
+async function cacheCustomDomains() {
+    const guilds = client.guilds.cache.map(guild => guild.id);
+    for (const guildId of guilds) {
+        await fetchCustomDomains(guildId);
+    }
+}
+
+client.on("guildCreate", async (guild) => {
+    console.log(`Joined new server: ${guild.name} (${guild.id})`);
+    await fetchServerSettings(guild.id);
+    await fetchCustomDomains(guild.id);
+});
+
+function loadDomains(fileName) {
+    const filePath = path.resolve(__dirname, fileName);
     if (fs.existsSync(filePath)) {
         const content = fs.readFileSync(filePath, "utf8");
         return content.split("\n").map((domain) => domain.trim()).filter(Boolean);
     } else {
-        console.error("DOMAINS.txt not found!");
+        console.error(`${fileName} not found!`);
         return [];
     }
 }
@@ -62,9 +140,19 @@ function containsBannedDomain(content, domains) {
 client.on("messageCreate", async (message) => {
     if (message.author.bot || !message.guild) return;
 
-    const domains = loadDomains();
-    const matchedDomains = containsBannedDomain(message.content, domains);
+    const guildId = message.guild.id;
+    const settings = await fetchServerSettings(guildId) || {};
+    const customDomains = await fetchCustomDomains(guildId) || [];
 
+    const domains = loadDomains("DOMAINS.txt").concat(customDomains);
+
+    for (const [category, fileName] of Object.entries(CATEGORY_FILES)) {
+        if (settings[category]) {
+            domains.push(...loadDomains(fileName));
+        }
+    }
+
+    const matchedDomains = containsBannedDomain(message.content, domains);
     if (matchedDomains.length > 0) {
         await message.delete();
 
