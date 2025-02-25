@@ -5,6 +5,7 @@ require("dotenv").config();
 const API_URL = "https://api.scyted.tv/v2/banx/settings/";
 
 const categoryOptions = {
+    "Default": "default",
     "Fake News": "fakenews",
     "Gambling": "gambling",
     "NSFW": "nsfw",
@@ -56,14 +57,11 @@ module.exports = {
             const settings = response.data;
 
             if (subcommand === "list") {
+                const categoryList = Object.entries(categoryOptions).map(([name, key]) => `**${name}:** ${settings[key] ? "<:checkmark:1330976666016550932> \`Enabled\`" : "<:crossmark:1330976664535961753> \`Disabled\`"}`).join("\n")
                 const embed = new EmbedBuilder()
                     .setTitle("Block Lists")
                     .setColor("#ff5050")
-                    .setDescription(
-                        Object.entries(categoryOptions)
-                            .map(([name, key]) => `**${name}:** ${settings[key] ? "<:checkmark:1330976666016550932> \`Enabled\`" : "<:crossmark:1330976664535961753> \`Disabled\`"}`)
-                            .join("\n")
-                    );
+                    .setDescription(`${categoryList}`);
 
                 return interaction.editReply({ embeds: [embed] });
             }
