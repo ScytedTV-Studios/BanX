@@ -256,7 +256,7 @@ client.on("messageCreate", async (message) => {
     if (!matchedDomain) {
         for (const [category, enabled] of Object.entries(settings)) {
             if (enabled && categoryTries.has(category)) {
-                matchedDomain = categoryTries.get(category).containsBannedDomain(message.content.toLocaleLowerCase);
+                matchedDomain = categoryTries.get(category).containsBannedDomain(message.content);
                 if (matchedDomain) break;
             }
         }
