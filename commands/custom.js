@@ -8,8 +8,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("custom")
         .setDescription("Manage custom blocked domains")
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .setDMPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addSubcommand(subcommand =>
             subcommand
                 .setName("add")
