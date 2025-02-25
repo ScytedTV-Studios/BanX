@@ -67,11 +67,20 @@ async function fetchServerSettings(guildId) {
         serverSettingsCache.set(guildId, response.data);
         return response.data;
     } catch (error) {
-        if (serverSettingsCache.has(guildId)) {
-            return serverSettingsCache.get(guildId);
+        if (error.response && error.response.status === 404) {
+            console.log(`No settings found for server ${guildId}, initializing defaults...`);
+            await axios.post(`${BASE_API_URL}${guildId}`, {
+                fakenews: false,
+                gambling: false,
+                nsfw: false,
+                scams: false,
+                social: false
+            }, { headers: { Authorization: `Bearer ${SCYTEDTV_API}` } });
+            return { fakenews: false, gambling: false, nsfw: false, scams: false, social: false };
+        } else {
+            console.error(`Error fetching settings for ${guildId}:`, error.message);
+            return null;
         }
-        console.error(`Error fetching settings for ${guildId}:`, error.message);
-        return null;
     }
 }
 
