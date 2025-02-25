@@ -251,12 +251,12 @@ client.on("messageCreate", async (message) => {
     let matchedDomain = null;
 
     const globalDomainsTrie = categoryTries.get("global") || new Trie();
-    matchedDomain = globalDomainsTrie.containsBannedDomain(message.content.toLowerCase);
+    matchedDomain = globalDomainsTrie.containsBannedDomain(message.content);
 
     if (!matchedDomain) {
         for (const [category, enabled] of Object.entries(settings)) {
             if (enabled && categoryTries.has(category)) {
-                matchedDomain = categoryTries.get(category).containsBannedDomain(message.content.toLowerCase);
+                matchedDomain = categoryTries.get(category).containsBannedDomain(message.content.toLocaleLowerCase);
                 if (matchedDomain) break;
             }
         }
