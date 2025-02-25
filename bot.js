@@ -283,8 +283,7 @@ client.on("messageCreate", async (message) => {
             .setDescription(`\`\`\`${message.content}\`\`\`\n**Your message contained** \`${matchedDomain}\`**.**`)
             .setColor("#ff5050");
     
-        const actionRow = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setLabel(message.guild.name).setStyle(ButtonStyle.Secondary).setDisabled(true).setCustomId("disabled_server_button")
+        const actionRow = new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel(message.guild.name).setStyle(ButtonStyle.Secondary).setDisabled(true).setCustomId("disabled_server_button")
         );
 
         try {
