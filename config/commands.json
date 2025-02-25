@@ -1,26 +1,38 @@
 [
     {
-        "name": "</help:1337972542157230140>",
-        "description": "Shows a list of commands."
+        "name": "</block enable:1343725446268719275>",
+        "description": "Enable a specific category of domain blocking."
     },
     {
-        "name": "</invite:1337989382484922369>",
-        "description": "Invite the bot to your server."
+        "name": "</block disable:1343725446268719275>",
+        "description": "Disable a specific category of domain blocking."
+    },
+    {
+        "name": "</block list:1343725446268719275>",
+        "description": "View which categories of domain blocking are enabled."
+    },
+    {
+        "name": "</custom add:1343725446268719276>",
+        "description": "Add a domain to the custom blocklist."
+    },
+    {
+        "name": "</custom remove:1343725446268719276>",
+        "description": "Remove a domain from the custom blocklist."
+    },
+    {
+        "name": "</custom list:1343725446268719276>",
+        "description": "List all custom blocked domains."
     },
     {
         "name": "</domain list:1337976799858266154>",
         "description": "Lists all globally blocked domains."
     },
     {
-        "name": "</domain add:1337976799858266154>",
-        "description": "Adds a domain to the global block list. | Bot Admin Only"
+        "name": "</help:1337972542157230140>",
+        "description": "Shows a list of commands."
     },
     {
-        "name": "</domain remove:1337976799858266154>",
-        "description": "Removes a domain from the global block list. | Bot Admin Only"
-    },
-    {
-        "name": "</restart:1337982508259872911>",
-        "description": "Restarts the bot. | Bot Admin Only"
+        "name": "</invite:1337989382484922369>",
+        "description": "Invite the bot to your server."
     }
 ]
