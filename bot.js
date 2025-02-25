@@ -250,13 +250,10 @@ client.on("messageCreate", async (message) => {
 
     let matchedDomain = null;
 
-    console.log(message.content);
-    console.log(message.content.toLowerCase);
-
     if (!matchedDomain) {
         for (const [category, enabled] of Object.entries(settings)) {
             if (enabled && categoryTries.has(category)) {
-                matchedDomain = categoryTries.get(category).containsBannedDomain(message.content);
+                matchedDomain = categoryTries.get(category).containsBannedDomain(message.content.toLowerCase());
                 if (matchedDomain) break;
             }
         }
