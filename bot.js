@@ -17,6 +17,7 @@ const SCYTEDTV_API = process.env.SCYTEDTV_API;
 const BASE_API_URL = "https://api.scyted.tv/v2/banx/settings/";
 const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
 const COUNT_API_URL = "https://api.scyted.tv/v2/banx/count";
+const SERVER_INFO_API = "https://api.scyted.tv/v2/banx/info/";
 
 const CATEGORY_FILES = {
     default: "DOMAINS.txt",
@@ -83,11 +84,41 @@ client.on("ready", async () => {
     await cacheServerSettings();
     await cacheCustomDomains();
 
+    updateServerInfo()
+
     await loadCategoryTries();
     setInterval(loadCategoryTries, 60 * 60 * 1000);
 
     updateStatus();
     setInterval(updateStatus, 20000);
+});
+
+async function updateServerInfo() {
+    const guilds = client.guilds.cache.map(guild => guild.id);
+    for (const guildId of guilds) {
+        const guild = client.guilds.cache.get(guildId);
+        if (guild) {
+            const iconUrl = guild.iconURL({ format: "png", dynamic: true, size: 1024 }) || null;
+            await axios.post(`${SERVER_INFO_API}${guildId}`, {
+                name: guild.name,
+                icon: iconUrl
+            }, {
+                headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+            }).catch(error => console.error(`Failed to update server info for ${guildId}:`, error));
+        }
+    }
+}
+
+client.on("guildUpdate", async (oldGuild, newGuild) => {
+    if (oldGuild.name !== newGuild.name || oldGuild.icon !== newGuild.icon) {
+        const iconUrl = newGuild.iconURL({ format: "png", dynamic: true, size: 1024 }) || null;
+        await axios.post(`${SERVER_INFO_API}${newGuild.id}`, {
+            name: newGuild.name,
+            icon: iconUrl
+        }, {
+            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        }).catch(error => console.error(`Failed to update server info for ${newGuild.id}:`, error));
+    }
 });
 
 async function getLatestRelease() {
