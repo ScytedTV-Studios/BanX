@@ -19,6 +19,7 @@ const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
 const COUNT_API_URL = "https://api.scyted.tv/v2/banx/count";
 
 const CATEGORY_FILES = {
+    default: "DOMAINS.txt",
     fakenews: "DOMAINS_FAKENEWS.txt",
     gambling: "DOMAINS_GAMBLING.txt",
     nsfw: "DOMAINS_NSFW.txt",
@@ -58,7 +59,18 @@ class Trie {
             for (let j = i; j < message.length; j++) {
                 if (!node.children[message[j]]) break;
                 node = node.children[message[j]];
-                if (node.isEndOfWord) return message.slice(i, j + 1);
+                if (node.isEndOfWord) {
+
+                    const before = message[i - 1] || " ";
+                    const after = message[j + 1] || " ";
+    
+                    const isBeforeValid = !/[a-zA-Z0-9]/.test(before);
+                    const isAfterValid = !/[a-zA-Z0-9]/.test(after);
+    
+                    if (isBeforeValid && isAfterValid) {
+                        return message.slice(i, j + 1);
+                    }
+                }
             }
         }
         return null;
@@ -175,13 +187,14 @@ async function fetchServerSettings(guildId) {
         if (error.response?.status === 404) {
             console.log(`No settings found for server ${guildId}, initializing defaults...`);
             await axios.post(`${BASE_API_URL}${guildId}`, {
+                default: true,
                 fakenews: false,
                 gambling: false,
                 nsfw: false,
                 scams: false,
                 social: false
             }, { headers: { Authorization: `Bearer ${SCYTEDTV_API}` } });
-            return { fakenews: false, gambling: false, nsfw: false, scams: false, social: false };
+            return { default: true, fakenews: false, gambling: false, nsfw: false, scams: false, social: false };
         }
         console.error(`Error fetching settings for ${guildId}:`, error.message);
         return null;
