@@ -250,8 +250,8 @@ client.on("messageCreate", async (message) => {
 
     let matchedDomain = null;
 
-    // const globalDomainsTrie = categoryTries.get("global") || new Trie();
-    // matchedDomain = globalDomainsTrie.containsBannedDomain(message.content);
+    console.log(message.content);
+    console.log(message.content.toLowerCase);
 
     if (!matchedDomain) {
         for (const [category, enabled] of Object.entries(settings)) {
