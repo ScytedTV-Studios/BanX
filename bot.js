@@ -16,6 +16,7 @@ const client = new Client({
 const SCYTEDTV_API = process.env.SCYTEDTV_API;
 const BASE_API_URL = "https://api.scyted.tv/v2/banx/settings/";
 const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
+const COUNT_API_URL = "https://api.scyted.tv/v2/banx/count";
 
 const CATEGORY_FILES = {
     fakenews: "DOMAINS_FAKENEWS.txt",
@@ -36,7 +37,51 @@ client.on("ready", async () => {
     setInterval(updateStatus, 20000);
 });
 
+async function getLatestRelease() {
+    try {
+        const response = await fetch("https://api.github.com/repos/ScytedTV-Studios/BanX/releases/latest", {
+            headers: {
+                "Accept": "application/vnd.github.v3+json"
+            }
+        });
+        if (!response.ok) throw new Error(`GitHub API responded with ${response.status}`);
+        const data = await response.json();
+
+        return data.tag_name || "Unknown Version";
+    } catch (error) {
+        console.error("Failed to fetch the latest release from GitHub:", error);
+        return "v1.3";
+    }
+}
+
+async function getCurrentCount() {
+    try {
+        const response = await fetch(COUNT_API_URL, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+            }
+        });
+
+        if (!response.ok) throw new Error(`GET request failed with status ${response.status}`);
+
+        const data = await response.json();
+        return data.count ?? 0;
+    } catch (error) {
+        console.error("Failed to fetch count from API:", error);
+        return 0;
+    }
+}
+
 const statuses = [
+    async () => {
+        const latestRelease = await getLatestRelease();
+        return { name: `${latestRelease}`, type: ActivityType.Playing };
+    },
+    async () => {
+        const count = await getCurrentCount();
+        return { name: `${count} messages blocked`, type: ActivityType.Custom };
+    },
     () => {
         const serverCount = client.guilds.cache.size;
         return { name: `${serverCount} servers`, type: ActivityType.Watching };
@@ -48,9 +93,10 @@ const statuses = [
 ];
 
 let statusIndex = 0;
-function updateStatus() {
+async function updateStatus() {
     if (client.user) {
-        const status = statuses[statusIndex]();
+        const statusFunction = statuses[statusIndex];
+        const status = await statusFunction();
         client.user.setPresence({
             status: 'dnd',
             activities: [{ name: status.name, type: status.type }],
@@ -164,34 +210,62 @@ client.on("messageCreate", async (message) => {
     const matchedDomains = containsBannedDomain(message.content, domains);
     if (matchedDomains.length > 0) {
         await message.delete();
-
+    
         const channelEmbed = new EmbedBuilder()
             .setDescription(`<@${message.author.id}> your message has been deleted for containing \`${matchedDomains.join("\`**,** \`")}\`.`)
             .setColor("#ff5050");
-
+    
         const warningMessage = await message.channel.send({ embeds: [channelEmbed] });
         setTimeout(() => warningMessage.delete(), 5000);
-
+    
         const dmEmbed = new EmbedBuilder()
             .setTitle("Your message was deleted")
             .setDescription(
-                `\`\`\`${message.content}\`\`\`\n**Your message contained** \`${matchedDomains.join("\`**,** \`")}\`**.**`)
+                `\`\`\`${message.content}\`\`\`\n**Your message contained** \`${matchedDomains.join("\`**,** \`")}\`**.**`
+            )
             .setColor("#ff5050");
-
+    
         const serverButton = new ButtonBuilder()
             .setLabel(message.guild.name)
             .setStyle(ButtonStyle.Secondary)
             .setDisabled(true)
             .setCustomId("disabled_server_button");
-
+    
         const actionRow = new ActionRowBuilder().addComponents(serverButton);
-
+    
         try {
             await message.author.send({ embeds: [dmEmbed], components: [actionRow] });
         } catch (e) {
             console.error(`Could not send DM to ${message.author.tag}:`, e);
+            return;
         }
-    }
+
+        try {
+            const response = await fetch(COUNT_API_URL, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                }
+            });
+    
+            if (!response.ok) throw new Error(`GET request failed with status ${response.status}`);
+    
+            const data = await response.json();
+            const previousCount = data.count ?? 0;
+    
+            await fetch(COUNT_API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                },
+                body: JSON.stringify({ count: previousCount + 1 })
+            });
+    
+        } catch (error) {
+            console.error("Failed to update count on API:", error);
+        }
+    }    
 });
 
 client.commands = new Collection();
