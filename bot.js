@@ -292,6 +292,32 @@ client.on("messageCreate", async (message) => {
         } catch (e) {
             console.error(`Could not send DM to ${message.author.tag}:`, e);
         }
+
+        try {
+            const response = await fetch(COUNT_API_URL, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                }
+            });
+    
+            if (!response.ok) throw new Error(`GET request failed with status ${response.status}`);
+    
+            const data = await response.json();
+            const previousCount = data.count ?? 0;
+    
+            await fetch(COUNT_API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                },
+                body: JSON.stringify({ count: previousCount + 1 })
+            });
+    
+        } catch (error) {
+            console.error("Failed to update count on API:", error);
+        }
     }
 });
 
