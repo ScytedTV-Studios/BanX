@@ -28,11 +28,52 @@ const CATEGORY_FILES = {
 
 const serverSettingsCache = new Map();
 const customDomainsCache = new Map();
+const categoryTries = new Map();
+
+class TrieNode {
+    constructor() {
+        this.children = {};
+        this.isEndOfWord = false;
+    }
+}
+
+class Trie {
+    constructor() {
+        this.root = new TrieNode();
+    }
+
+    insert(word) {
+        let node = this.root;
+        for (const char of word) {
+            if (!node.children[char]) node.children[char] = new TrieNode();
+            node = node.children[char];
+        }
+        node.isEndOfWord = true;
+    }
+
+    containsBannedDomain(message) {
+        let node;
+        for (let i = 0; i < message.length; i++) {
+            node = this.root;
+            for (let j = i; j < message.length; j++) {
+                if (!node.children[message[j]]) break;
+                node = node.children[message[j]];
+                if (node.isEndOfWord) return message.slice(i, j + 1);
+            }
+        }
+        return null;
+    }
+}
 
 client.on("ready", async () => {
     console.log(`Logged in as ${client.user.tag}`);
+
     await cacheServerSettings();
     await cacheCustomDomains();
+
+    await loadCategoryTries();
+    setInterval(loadCategoryTries, 60 * 60 * 1000);
+
     updateStatus();
     setInterval(updateStatus, 20000);
 });
@@ -105,6 +146,24 @@ async function updateStatus() {
     }
 }
 
+async function loadCategoryTries() {
+    console.log("Building Tries for all categories...");
+
+    for (const [category, fileName] of Object.entries(CATEGORY_FILES)) {
+        const trie = new Trie();
+        const filePath = path.resolve(__dirname, fileName);
+        if (fs.existsSync(filePath)) {
+            const content = fs.readFileSync(filePath, "utf8");
+            content.split("\n").map(domain => domain.trim()).filter(Boolean).forEach(domain => {
+                trie.insert(domain);
+            });
+        }
+        categoryTries.set(category, trie);
+    }
+
+    console.log("All category Tries built.");
+}
+
 async function fetchServerSettings(guildId) {
     try {
         const response = await axios.get(`${BASE_API_URL}${guildId}`, {
@@ -113,7 +172,7 @@ async function fetchServerSettings(guildId) {
         serverSettingsCache.set(guildId, response.data);
         return response.data;
     } catch (error) {
-        if (error.response && error.response.status === 404) {
+        if (error.response?.status === 404) {
             console.log(`No settings found for server ${guildId}, initializing defaults...`);
             await axios.post(`${BASE_API_URL}${guildId}`, {
                 fakenews: false,
@@ -123,10 +182,9 @@ async function fetchServerSettings(guildId) {
                 social: false
             }, { headers: { Authorization: `Bearer ${SCYTEDTV_API}` } });
             return { fakenews: false, gambling: false, nsfw: false, scams: false, social: false };
-        } else {
-            console.error(`Error fetching settings for ${guildId}:`, error.message);
-            return null;
         }
+        console.error(`Error fetching settings for ${guildId}:`, error.message);
+        return null;
     }
 }
 
@@ -144,10 +202,6 @@ async function fetchCustomDomains(guildId) {
             });
             customDomainsCache.set(guildId, []);
             return [];
-        }
-
-        if (customDomainsCache.has(guildId)) {
-            return customDomainsCache.get(guildId);
         }
         console.error(`Error fetching custom domains for ${guildId}:`, error.message);
         return [];
@@ -174,24 +228,6 @@ client.on("guildCreate", async (guild) => {
     await fetchCustomDomains(guild.id);
 });
 
-function loadDomains(fileName) {
-    const filePath = path.resolve(__dirname, fileName);
-    if (fs.existsSync(filePath)) {
-        const content = fs.readFileSync(filePath, "utf8");
-        return content.split("\n").map((domain) => domain.trim()).filter(Boolean);
-    } else {
-        console.error(`${fileName} not found!`);
-        return [];
-    }
-}
-
-function containsBannedDomain(content, domains) {
-    return domains.filter(domain => {
-        const domainPattern = new RegExp(`(?:^|[\\s\\[\\]()<>.,!?\"'])${domain.replace(/\./g, "\\.")}(?:$|[\\s\\[\\]()<>.,!?\"'])`, "i");
-        return domainPattern.test(content);
-    });
-}
-
 client.on("messageCreate", async (message) => {
     if (message.author.bot || !message.guild) return;
 
@@ -199,20 +235,31 @@ client.on("messageCreate", async (message) => {
     const settings = await fetchServerSettings(guildId) || {};
     const customDomains = await fetchCustomDomains(guildId) || [];
 
-    const domains = loadDomains("DOMAINS.txt").concat(customDomains);
+    let matchedDomain = null;
 
-    for (const [category, fileName] of Object.entries(CATEGORY_FILES)) {
-        if (settings[category]) {
-            domains.push(...loadDomains(fileName));
+    const globalDomainsTrie = categoryTries.get("global") || new Trie();
+    matchedDomain = globalDomainsTrie.containsBannedDomain(message.content);
+
+    if (!matchedDomain) {
+        for (const [category, enabled] of Object.entries(settings)) {
+            if (enabled && categoryTries.has(category)) {
+                matchedDomain = categoryTries.get(category).containsBannedDomain(message.content);
+                if (matchedDomain) break;
+            }
         }
     }
 
-    const matchedDomains = containsBannedDomain(message.content, domains);
-    if (matchedDomains.length > 0) {
+    if (!matchedDomain) {
+        customDomains.forEach(domain => {
+            if (message.content.includes(domain)) matchedDomain = domain;
+        });
+    }
+
+    if (matchedDomain) {
         await message.delete();
     
         const channelEmbed = new EmbedBuilder()
-            .setDescription(`<@${message.author.id}> your message has been deleted for containing \`${matchedDomains.join("\`**,** \`")}\`.`)
+            .setDescription(`<@${message.author.id}> your message has been deleted for containing \`${matchedDomain}\`.`)
             .setColor("#ff5050");
     
         const warningMessage = await message.channel.send({ embeds: [channelEmbed] });
@@ -220,52 +267,19 @@ client.on("messageCreate", async (message) => {
     
         const dmEmbed = new EmbedBuilder()
             .setTitle("Your message was deleted")
-            .setDescription(
-                `\`\`\`${message.content}\`\`\`\n**Your message contained** \`${matchedDomains.join("\`**,** \`")}\`**.**`
-            )
+            .setDescription(`\`\`\`${message.content}\`\`\`\n**Your message contained** \`${matchedDomain}\`**.**`)
             .setColor("#ff5050");
     
-        const serverButton = new ButtonBuilder()
-            .setLabel(message.guild.name)
-            .setStyle(ButtonStyle.Secondary)
-            .setDisabled(true)
-            .setCustomId("disabled_server_button");
-    
-        const actionRow = new ActionRowBuilder().addComponents(serverButton);
-    
+        const actionRow = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setLabel(message.guild.name).setStyle(ButtonStyle.Secondary).setDisabled(true).setCustomId("disabled_server_button")
+        );
+
         try {
             await message.author.send({ embeds: [dmEmbed], components: [actionRow] });
         } catch (e) {
             console.error(`Could not send DM to ${message.author.tag}:`, e);
-            return;
         }
-
-        try {
-            const response = await fetch(COUNT_API_URL, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
-                }
-            });
-    
-            if (!response.ok) throw new Error(`GET request failed with status ${response.status}`);
-    
-            const data = await response.json();
-            const previousCount = data.count ?? 0;
-    
-            await fetch(COUNT_API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
-                },
-                body: JSON.stringify({ count: previousCount + 1 })
-            });
-    
-        } catch (error) {
-            console.error("Failed to update count on API:", error);
-        }
-    }    
+    }
 });
 
 client.commands = new Collection();
