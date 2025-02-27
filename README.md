@@ -2,7 +2,7 @@
 
 ![Latest Release](https://img.shields.io/github/release/ScytedTV-Studios/BanX) ![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Wrapper](https://img.shields.io/badge/wrapper-discord.js-5865F2) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
 
-![Ban X - Banner](https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X_Twitter%20-%20GitHub%20Preview.jpg?raw=true)
+![Ban X - Banner](https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20GitHub%20Preview.jpg?raw=true)
 
 Easily protect your servers against **X**/**Twitter** URLs.
 
