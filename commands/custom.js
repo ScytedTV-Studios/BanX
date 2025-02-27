@@ -98,9 +98,12 @@ module.exports = {
                     return interaction.editReply({ embeds: [embed] });
                 }
 
+                const latestRelease = await getLatestRelease();
+
                 const embed = new EmbedBuilder()
                         .setColor("#ff5050")
-                        .setDescription(`**Custom Banned Domains**\n\`${domains.join("\`, \`")}\`\n-# This does not include global or block list domains.`);
+                        .setDescription(`**Custom Banned Domains**\n-# This does not include global or block list domains.\n\`${domains.join("\`, \`")}\``)
+                        .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20Icon.png?raw=true' });
                 return interaction.editReply({ embeds: [embed] });
             }
         } catch (error) {
@@ -112,3 +115,20 @@ module.exports = {
         }
     }
 };
+
+async function getLatestRelease() {
+    try {
+        const response = await fetch("https://api.github.com/repos/ScytedTV-Studios/BanX/releases/latest", {
+            headers: {
+                "Accept": "application/vnd.github.v3+json"
+            }
+        });
+        if (!response.ok) throw new Error(`GitHub API responded with ${response.status}`);
+        const data = await response.json();
+
+        return data.tag_name || "Unknown Version";
+    } catch (error) {
+        console.error("Failed to fetch the latest release from GitHub:", error);
+        return "v1.3";
+    }
+}
