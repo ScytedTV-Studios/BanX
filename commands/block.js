@@ -18,8 +18,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("block")
         .setDescription("Manage domain blocking settings for your server.")
-        .setDMPermission(false)
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+        .setContexts(InteractionContextType.Guild)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addSubcommand(subcommand =>
             subcommand.setName("enable")
                 .setDescription("Enable a specific category of domain blocking.")
