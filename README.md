@@ -1,4 +1,4 @@
-# Ban X/Twitter
+# Ban X
 
 ![Latest Release](https://img.shields.io/github/release/ScytedTV-Studios/BanX) ![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Wrapper](https://img.shields.io/badge/wrapper-discord.js-5865F2) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
 
