@@ -1,12 +1,12 @@
 # Ban X
 
-![Latest Release](https://img.shields.io/github/release/ScytedTV-Studios/BanX) ![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Wrapper](https://img.shields.io/badge/wrapper-discord.js-5865F2) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
+![License](https://img.shields.io/dub/l/vibe-d.svg) ![Latest Release](https://img.shields.io/github/release/ScytedTV-Studios/BanX) ![Last Commit](https://img.shields.io/github/last-commit/ScytedTV-Studios/BanX) ![Wrapper](https://img.shields.io/badge/wrapper-discord.js-5865F2) ![Contributors](https://img.shields.io/github/contributors/ScytedTV-Studios/BanX)
 
 ![Ban X - Banner](https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20GitHub%20Preview.jpg?raw=true)
 
-Easily protect your servers against **X**/**Twitter** URLs.
+Easily protect your servers against **inappropriate** and **scam** URLs.
 
-**Ban X** will automatically delete messages that contain URLs known to link to **X** (formerly **Twitter**). This may additionally support URLs that **share the same values** as the **X** platform.
+**Ban X** will automatically delete messages that contain URLs known to link to **X** (formerly **Twitter**). You can enable other categories of URLs using the `/block enable <type>`.
 
 This is a harm-free way to keep your server safe. It doesn't kick or ban users for posting these links, it instead deletes their message and lets them know why it was harmful.
 
@@ -28,6 +28,7 @@ These are the sources of our additional block lists.
 | --------- | ------------ | ------------------ | ---------- |
 | Fake News | [`DOMAINS_FAKENEWS.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_FAKENEWS.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-only/hosts) |
 | Gambling | [`DOMAINS_GAMBLING.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_GAMBLING.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-only/hosts) |
+| IP Grabber | [`DOMAINS_IP_GRABBER.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_IP_GRABBER.txt) | [`furuycom/ProtectorHosts`](https://github.com/furuycom/ProtectorHosts) | [`hosts`](https://raw.githubusercontent.com/furkun/ProtectorHosts/main/hosts) |
 | NSFW | [`DOMAINS_NSFW.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_NSFW.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-only/hosts) |
 | Scams | [`DOMAINS_SCAMS.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_SCAMS.txt) | [`jarelllama/Scam-Blocklist`](https://github.com/jarelllama/Scam-Blocklist) | [`scams.txt`](https://raw.githubusercontent.com/jarelllama/Scam-Blocklist/main/lists/wildcard_domains/scams.txt) |
 | Social | [`DOMAINS_SOCIAL.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_SOCIAL.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/social-only/hosts) |

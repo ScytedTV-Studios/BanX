@@ -23,6 +23,7 @@ const CATEGORY_FILES = {
     default: "DOMAINS.txt",
     fakenews: "DOMAINS_FAKENEWS.txt",
     gambling: "DOMAINS_GAMBLING.txt",
+    ipgrabber: "DOMAINS_IP_GRABBER.txt",
     nsfw: "DOMAINS_NSFW.txt",
     scams: "DOMAINS_SCAMS.txt",
     social: "DOMAINS_SOCIAL.txt"
@@ -221,11 +222,12 @@ async function fetchServerSettings(guildId) {
                 default: true,
                 fakenews: false,
                 gambling: false,
+                ipgrabber: false,
                 nsfw: false,
                 scams: false,
                 social: false
             }, { headers: { Authorization: `Bearer ${SCYTEDTV_API}` } });
-            return { default: true, fakenews: false, gambling: false, nsfw: false, scams: false, social: false };
+            return { default: true, fakenews: false, gambling: false, ipgrabber: false, nsfw: false, scams: false, social: false };
         }
         console.error(`Error fetching settings for ${guildId}:`, error.message);
         return null;

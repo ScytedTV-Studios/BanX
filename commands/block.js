@@ -8,6 +8,7 @@ const categoryOptions = {
     "Default": "default",
     "Fake News": "fakenews",
     "Gambling": "gambling",
+    "IP Grabbers": "ipgrabber",
     "NSFW": "nsfw",
     "Scams": "scams",
     "Social": "social"
