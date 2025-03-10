@@ -19,7 +19,7 @@ module.exports = {
         .setName("block")
         .setDescription("Manage domain blocking settings for your server.")
         .setDMPermission(false)
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addSubcommand(subcommand =>
             subcommand.setName("enable")
                 .setDescription("Enable a specific category of domain blocking.")
