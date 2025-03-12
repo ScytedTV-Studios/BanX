@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, InteractionContextType } = require("discord.js");
 
-const SCYTEDTV_API = process.env.SCYTEDTV_API;
+const SCYTEDTV_API_KEY = process.env.SCYTEDTV_API_KEY;
 const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
 
 module.exports = {
@@ -40,7 +40,7 @@ module.exports = {
         try {
             if (subcommand === "add") {
                 const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+                    headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
                 }).catch(error => (error?.status === 404 ? { data: [] } : Promise.reject(error)));
 
                 const domains = await response.json();
@@ -56,7 +56,7 @@ module.exports = {
                     method: "POST",
                     body: JSON.stringify(domains),
                     headers: {
-                        Authorization: `Bearer ${SCYTEDTV_API}`,
+                        Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
                         "Content-Type": "application/json"
                     }
                 });
@@ -68,7 +68,7 @@ module.exports = {
 
             } else if (subcommand === "remove") {
                 const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+                    headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
                 }).catch(error => (error?.status === 404 ? { data: [] } : Promise.reject(error)));
 
                 const domains = await response.json();
@@ -84,7 +84,7 @@ module.exports = {
                     method: "POST",
                     body: JSON.stringify(updatedDomains),
                     headers: {
-                        Authorization: `Bearer ${SCYTEDTV_API}`,
+                        Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
                         "Content-Type": "application/json"
                     }
                 });
@@ -96,7 +96,7 @@ module.exports = {
 
             } else if (subcommand === "list") {
                 const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+                    headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
                 }).catch(error => (error?.status === 404 ? { data: [] } : Promise.reject(error)));
 
                 const domains = await response.json();

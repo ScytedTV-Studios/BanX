@@ -51,7 +51,7 @@ module.exports = {
 
         try {
             const response = await fetch(`${API_URL}${guildId}`, {
-                headers: { Authorization: `Bearer ${process.env.SCYTEDTV_API}` }
+                headers: { Authorization: `Bearer ${process.env.SCYTEDTV_API_KEY}` }
             });
 
             const settings = await response.json()
@@ -76,7 +76,7 @@ module.exports = {
                 method: "POST",
                 body: JSON.stringify(settings),
                 headers: {
-                    Authorization: `Bearer ${process.env.SCYTEDTV_API}`,
+                    Authorization: `Bearer ${process.env.SCYTEDTV_API_KEY}`,
                     "Content-Type": "application/json"
                 }
             });

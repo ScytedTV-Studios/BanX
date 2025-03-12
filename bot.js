@@ -12,7 +12,7 @@ const client = new Client({
     ],
 });
 
-const SCYTEDTV_API = process.env.SCYTEDTV_API;
+const SCYTEDTV_API_KEY = process.env.SCYTEDTV_API_KEY;
 const BASE_API_URL = "https://api.scyted.tv/v2/banx/settings/";
 const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
 const COUNT_API_URL = "https://api.scyted.tv/v2/banx/count";
@@ -106,7 +106,7 @@ async function updateServerInfo() {
                     icon: iconUrl
                 }),
                 headers: {
-                    Authorization: `Bearer ${SCYTEDTV_API}`,
+                    Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
                     "Content-Type": "application/json"
                 }
             }).catch(error => console.error(`Failed to update server info for ${guildId}:\n${error.stack}`));
@@ -124,7 +124,7 @@ client.on("guildUpdate", async (oldGuild, newGuild) => {
                 icon: iconUrl
             }),
             headers: {
-                Authorization: `Bearer ${SCYTEDTV_API}`,
+                Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
                 "Content-Type": "application/json"
             }
         }).catch(error => console.error(`Failed to update server info for ${newGuild.id}:\n${error.stack}`));
@@ -153,7 +153,7 @@ async function getCurrentCount() {
         const response = await fetch(COUNT_API_URL, {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                "Authorization": `Bearer ${process.env.SCYTEDTV_API_KEY}`
             }
         });
 
@@ -220,7 +220,7 @@ async function loadCategoryTries() {
 async function fetchServerSettings(guildId) {
     try {
         const response = await fetch(`${BASE_API_URL}${guildId}`, {
-            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+            headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
         });
         const data = await response.json();
 
@@ -241,7 +241,7 @@ async function fetchServerSettings(guildId) {
                     social: false
                 }),
                 headers: {
-                    Authorization: `Bearer ${SCYTEDTV_API}`,
+                    Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
                     "Content-Type": "application/json"
                 }
             });
@@ -255,7 +255,7 @@ async function fetchServerSettings(guildId) {
 async function fetchCustomDomains(guildId) {
     try {
         const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
-            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+            headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
         });
         const data = await response.json();
 
@@ -267,7 +267,7 @@ async function fetchCustomDomains(guildId) {
                 method: "POST",
                 body: "[]",
                 headers: {
-                    Authorization: `Bearer ${SCYTEDTV_API}`,
+                    Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
                     "Content-Type": "application/json"
                 }
             });
@@ -351,7 +351,7 @@ client.on("messageCreate", async (message) => {
             const response = await fetch(COUNT_API_URL, {
                 method: "GET",
                 headers: {
-                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API_KEY}`
                 }
             });
     
@@ -364,7 +364,7 @@ client.on("messageCreate", async (message) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API_KEY}`
                 },
                 body: JSON.stringify({ count: previousCount + 1 })
             });
