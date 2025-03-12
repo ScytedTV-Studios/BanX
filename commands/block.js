@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, InteractionContextType } = require("discord.js");
-const axios = require("axios");
 require("dotenv").config();
 
 const API_URL = "https://api.scyted.tv/v2/banx/settings/";
@@ -51,11 +50,11 @@ module.exports = {
         const subcommand = interaction.options.getSubcommand();
 
         try {
-            const response = await axios.get(`${API_URL}${guildId}`, {
+            const response = await fetch(`${API_URL}${guildId}`, {
                 headers: { Authorization: `Bearer ${process.env.SCYTEDTV_API}` }
             });
 
-            const settings = response.data;
+            const settings = await response.json()
 
             if (subcommand === "list") {
                 const categoryList = Object.entries(categoryOptions).map(([name, key]) => `**${name}:** ${settings[key] ? "<:checkmark:1330976666016550932> \`Enabled\`" : "<:crossmark:1330976664535961753> \`Disabled\`"}`).join("\n")
@@ -73,8 +72,13 @@ module.exports = {
 
             settings[type] = isEnableCommand;
 
-            await axios.post(`${API_URL}${guildId}`, settings, {
-                headers: { Authorization: `Bearer ${process.env.SCYTEDTV_API}` }
+            await fetch(`${API_URL}${guildId}`, {
+                method: "POST",
+                body: JSON.stringify(settings),
+                headers: {
+                    Authorization: `Bearer ${process.env.SCYTEDTV_API}`,
+                    "Content-Type": "application/json"
+                }
             });
 
             return interaction.editReply({

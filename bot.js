@@ -2,7 +2,6 @@ require("dotenv").config();
 const { Client, GatewayIntentBits, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ActivityType, REST, Routes, Collection } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
-const axios = require("axios");
 
 const client = new Client({
     intents: [
@@ -100,11 +99,16 @@ async function updateServerInfo() {
         const guild = client.guilds.cache.get(guildId);
         if (guild) {
             const iconUrl = guild.iconURL({ format: "png", dynamic: true, size: 1024 }) || null;
-            await axios.post(`${SERVER_INFO_API}${guildId}`, {
-                name: guild.name,
-                icon: iconUrl
-            }, {
-                headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+            await fetch(`${SERVER_INFO_API}${guildId}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    name: guild.name,
+                    icon: iconUrl
+                }),
+                headers: {
+                    Authorization: `Bearer ${SCYTEDTV_API}`,
+                    "Content-Type": "application/json"
+                }
             }).catch(error => console.error(`Failed to update server info for ${guildId}:`, error));
         }
     }
@@ -113,11 +117,16 @@ async function updateServerInfo() {
 client.on("guildUpdate", async (oldGuild, newGuild) => {
     if (oldGuild.name !== newGuild.name || oldGuild.icon !== newGuild.icon) {
         const iconUrl = newGuild.iconURL({ format: "png", dynamic: true, size: 1024 }) || null;
-        await axios.post(`${SERVER_INFO_API}${newGuild.id}`, {
-            name: newGuild.name,
-            icon: iconUrl
-        }, {
-            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        await fetch(`${SERVER_INFO_API}${newGuild.id}`, {
+            method: "POST",
+            body: JSON.stringify({
+                name: newGuild.name,
+                icon: iconUrl
+            }),
+            headers: {
+                Authorization: `Bearer ${SCYTEDTV_API}`,
+                "Content-Type": "application/json"
+            }
         }).catch(error => console.error(`Failed to update server info for ${newGuild.id}:`, error));
     }
 });
@@ -210,46 +219,62 @@ async function loadCategoryTries() {
 
 async function fetchServerSettings(guildId) {
     try {
-        const response = await axios.get(`${BASE_API_URL}${guildId}`, {
+        const response = await fetch(`${BASE_API_URL}${guildId}`, {
             headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
         });
-        serverSettingsCache.set(guildId, response.data);
-        return response.data;
+        const data = await response.json();
+
+        serverSettingsCache.set(guildId, data);
+        return data;
     } catch (error) {
-        if (error.response?.status === 404) {
+        if (error?.status === 404) {
             console.log(`No settings found for server ${guildId}, initializing defaults...`);
-            await axios.post(`${BASE_API_URL}${guildId}`, {
-                default: true,
-                fakenews: false,
-                gambling: false,
-                ipgrabber: false,
-                nsfw: false,
-                scams: false,
-                social: false
-            }, { headers: { Authorization: `Bearer ${SCYTEDTV_API}` } });
+            await fetch(`${BASE_API_URL}${guildId}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    default: true,
+                    fakenews: false,
+                    gambling: false,
+                    ipgrabber: false,
+                    nsfw: false,
+                    scams: false,
+                    social: false
+                }),
+                headers: {
+                    Authorization: `Bearer ${SCYTEDTV_API}`,
+                    "Content-Type": "application/json"
+                }
+            });
             return { default: true, fakenews: false, gambling: false, ipgrabber: false, nsfw: false, scams: false, social: false };
         }
-        console.error(`Error fetching settings for ${guildId}:`, error.message);
+        console.error(`Error fetching settings for ${guildId}:\n${error.stack}`);
         return null;
     }
 }
 
 async function fetchCustomDomains(guildId) {
     try {
-        const response = await axios.get(`${CUSTOM_DOMAINS_API}${guildId}`, {
+        const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
             headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
         });
-        customDomainsCache.set(guildId, response.data);
-        return response.data;
+        const data = await response.json();
+
+        customDomainsCache.set(guildId, data);
+        return data;
     } catch (error) {
-        if (error.response?.status === 404) {
-            await axios.post(`${CUSTOM_DOMAINS_API}${guildId}`, [], {
-                headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        if (error?.status === 404) {
+            await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+                method: "POST",
+                body: "[]",
+                headers: {
+                    Authorization: `Bearer ${SCYTEDTV_API}`,
+                    "Content-Type": "application/json"
+                }
             });
             customDomainsCache.set(guildId, []);
             return [];
         }
-        console.error(`Error fetching custom domains for ${guildId}:`, error.message);
+        console.error(`Error fetching custom domains for ${guildId}:\n${error.stack}`);
         return [];
     }
 }
