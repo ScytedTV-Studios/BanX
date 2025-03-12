@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, InteractionContextType } = require("discord.js");
-const axios = require("axios");
 
-const SCYTEDTV_API = process.env.SCYTEDTV_API;
+const SCYTEDTV_API_KEY = process.env.SCYTEDTV_API_KEY;
 const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
 
 module.exports = {
@@ -40,11 +39,11 @@ module.exports = {
 
         try {
             if (subcommand === "add") {
-                const response = await axios.get(`${CUSTOM_DOMAINS_API}${guildId}`, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
-                }).catch(error => (error.response?.status === 404 ? { data: [] } : Promise.reject(error)));
+                const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+                    headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
+                }).catch(error => (error?.status === 404 ? { data: [] } : Promise.reject(error)));
 
-                const domains = response.data;
+                const domains = await response.json();
                 if (domains.includes(domain)) {
                     const embed = new EmbedBuilder()
                         .setColor("Red")
@@ -53,8 +52,13 @@ module.exports = {
                 }
 
                 domains.push(domain);
-                await axios.post(`${CUSTOM_DOMAINS_API}${guildId}`, domains, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+                await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+                    method: "POST",
+                    body: JSON.stringify(domains),
+                    headers: {
+                        Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
+                        "Content-Type": "application/json"
+                    }
                 });
 
                 const embed = new EmbedBuilder()
@@ -63,11 +67,11 @@ module.exports = {
                 return interaction.editReply({ embeds: [embed] });
 
             } else if (subcommand === "remove") {
-                const response = await axios.get(`${CUSTOM_DOMAINS_API}${guildId}`, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
-                }).catch(error => (error.response?.status === 404 ? { data: [] } : Promise.reject(error)));
+                const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+                    headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
+                }).catch(error => (error?.status === 404 ? { data: [] } : Promise.reject(error)));
 
-                const domains = response.data;
+                const domains = await response.json();
                 if (!domains.includes(domain)) {
                     const embed = new EmbedBuilder()
                         .setColor("Red")
@@ -76,8 +80,13 @@ module.exports = {
                 }
 
                 const updatedDomains = domains.filter(d => d !== domain);
-                await axios.post(`${CUSTOM_DOMAINS_API}${guildId}`, updatedDomains, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+                await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+                    method: "POST",
+                    body: JSON.stringify(updatedDomains),
+                    headers: {
+                        Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
+                        "Content-Type": "application/json"
+                    }
                 });
 
                 const embed = new EmbedBuilder()
@@ -86,11 +95,11 @@ module.exports = {
                 return interaction.editReply({ embeds: [embed] });
 
             } else if (subcommand === "list") {
-                const response = await axios.get(`${CUSTOM_DOMAINS_API}${guildId}`, {
-                    headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
-                }).catch(error => (error.response?.status === 404 ? { data: [] } : Promise.reject(error)));
+                const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+                    headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
+                }).catch(error => (error?.status === 404 ? { data: [] } : Promise.reject(error)));
 
-                const domains = response.data;
+                const domains = await response.json();
                 if (domains.length === 0) {
                     const embed = new EmbedBuilder()
                         .setColor("Red")
@@ -107,7 +116,7 @@ module.exports = {
                 return interaction.editReply({ embeds: [embed] });
             }
         } catch (error) {
-            console.error(`Error handling /custom command:`, error);
+            console.error(`Error handling /custom command:\n${error.stack}`);
             const embed = new EmbedBuilder()
                         .setColor("Red")
                         .setDescription(`<:crossmark:1330976664535961753> \`An error occurred. Try again later.\``);
@@ -128,7 +137,7 @@ async function getLatestRelease() {
 
         return data.tag_name || "Unknown Version";
     } catch (error) {
-        console.error("Failed to fetch the latest release from GitHub:", error);
+        console.error(`Failed to fetch the latest release from GitHub:\n${error.stack}`);
         return "v1.3";
     }
 }

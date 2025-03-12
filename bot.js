@@ -2,7 +2,6 @@ require("dotenv").config();
 const { Client, GatewayIntentBits, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ActivityType, REST, Routes, Collection } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
-const axios = require("axios");
 
 const client = new Client({
     intents: [
@@ -13,7 +12,7 @@ const client = new Client({
     ],
 });
 
-const SCYTEDTV_API = process.env.SCYTEDTV_API;
+const SCYTEDTV_API_KEY = process.env.SCYTEDTV_API_KEY;
 const BASE_API_URL = "https://api.scyted.tv/v2/banx/settings/";
 const CUSTOM_DOMAINS_API = "https://api.scyted.tv/v2/banx/customdomains/";
 const COUNT_API_URL = "https://api.scyted.tv/v2/banx/count";
@@ -100,12 +99,17 @@ async function updateServerInfo() {
         const guild = client.guilds.cache.get(guildId);
         if (guild) {
             const iconUrl = guild.iconURL({ format: "png", dynamic: true, size: 1024 }) || null;
-            await axios.post(`${SERVER_INFO_API}${guildId}`, {
-                name: guild.name,
-                icon: iconUrl
-            }, {
-                headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
-            }).catch(error => console.error(`Failed to update server info for ${guildId}:`, error));
+            await fetch(`${SERVER_INFO_API}${guildId}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    name: guild.name,
+                    icon: iconUrl
+                }),
+                headers: {
+                    Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
+                    "Content-Type": "application/json"
+                }
+            }).catch(error => console.error(`Failed to update server info for ${guildId}:\n${error.stack}`));
         }
     }
 }
@@ -113,12 +117,17 @@ async function updateServerInfo() {
 client.on("guildUpdate", async (oldGuild, newGuild) => {
     if (oldGuild.name !== newGuild.name || oldGuild.icon !== newGuild.icon) {
         const iconUrl = newGuild.iconURL({ format: "png", dynamic: true, size: 1024 }) || null;
-        await axios.post(`${SERVER_INFO_API}${newGuild.id}`, {
-            name: newGuild.name,
-            icon: iconUrl
-        }, {
-            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
-        }).catch(error => console.error(`Failed to update server info for ${newGuild.id}:`, error));
+        await fetch(`${SERVER_INFO_API}${newGuild.id}`, {
+            method: "POST",
+            body: JSON.stringify({
+                name: newGuild.name,
+                icon: iconUrl
+            }),
+            headers: {
+                Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
+                "Content-Type": "application/json"
+            }
+        }).catch(error => console.error(`Failed to update server info for ${newGuild.id}:\n${error.stack}`));
     }
 });
 
@@ -134,7 +143,7 @@ async function getLatestRelease() {
 
         return data.tag_name || "Unknown Version";
     } catch (error) {
-        console.error("Failed to fetch the latest release from GitHub:", error);
+        console.error(`Failed to fetch the latest release from GitHub:\n${error.stack}`);
         return "v1.3";
     }
 }
@@ -144,7 +153,7 @@ async function getCurrentCount() {
         const response = await fetch(COUNT_API_URL, {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                "Authorization": `Bearer ${process.env.SCYTEDTV_API_KEY}`
             }
         });
 
@@ -153,7 +162,7 @@ async function getCurrentCount() {
         const data = await response.json();
         return data.count ?? 0;
     } catch (error) {
-        console.error("Failed to fetch count from API:", error);
+        console.error(`Failed to fetch count from API:\n${error.stack}`);
         return 0;
     }
 }
@@ -210,46 +219,62 @@ async function loadCategoryTries() {
 
 async function fetchServerSettings(guildId) {
     try {
-        const response = await axios.get(`${BASE_API_URL}${guildId}`, {
-            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        const response = await fetch(`${BASE_API_URL}${guildId}`, {
+            headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
         });
-        serverSettingsCache.set(guildId, response.data);
-        return response.data;
+        const data = await response.json();
+
+        serverSettingsCache.set(guildId, data);
+        return data;
     } catch (error) {
-        if (error.response?.status === 404) {
+        if (error?.status === 404) {
             console.log(`No settings found for server ${guildId}, initializing defaults...`);
-            await axios.post(`${BASE_API_URL}${guildId}`, {
-                default: true,
-                fakenews: false,
-                gambling: false,
-                ipgrabber: false,
-                nsfw: false,
-                scams: false,
-                social: false
-            }, { headers: { Authorization: `Bearer ${SCYTEDTV_API}` } });
+            await fetch(`${BASE_API_URL}${guildId}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    default: true,
+                    fakenews: false,
+                    gambling: false,
+                    ipgrabber: false,
+                    nsfw: false,
+                    scams: false,
+                    social: false
+                }),
+                headers: {
+                    Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
+                    "Content-Type": "application/json"
+                }
+            });
             return { default: true, fakenews: false, gambling: false, ipgrabber: false, nsfw: false, scams: false, social: false };
         }
-        console.error(`Error fetching settings for ${guildId}:`, error.message);
+        console.error(`Error fetching settings for ${guildId}:\n${error.stack}`);
         return null;
     }
 }
 
 async function fetchCustomDomains(guildId) {
     try {
-        const response = await axios.get(`${CUSTOM_DOMAINS_API}${guildId}`, {
-            headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        const response = await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+            headers: { Authorization: `Bearer ${SCYTEDTV_API_KEY}` }
         });
-        customDomainsCache.set(guildId, response.data);
-        return response.data;
+        const data = await response.json();
+
+        customDomainsCache.set(guildId, data);
+        return data;
     } catch (error) {
-        if (error.response?.status === 404) {
-            await axios.post(`${CUSTOM_DOMAINS_API}${guildId}`, [], {
-                headers: { Authorization: `Bearer ${SCYTEDTV_API}` }
+        if (error?.status === 404) {
+            await fetch(`${CUSTOM_DOMAINS_API}${guildId}`, {
+                method: "POST",
+                body: "[]",
+                headers: {
+                    Authorization: `Bearer ${SCYTEDTV_API_KEY}`,
+                    "Content-Type": "application/json"
+                }
             });
             customDomainsCache.set(guildId, []);
             return [];
         }
-        console.error(`Error fetching custom domains for ${guildId}:`, error.message);
+        console.error(`Error fetching custom domains for ${guildId}:\n${error.stack}`);
         return [];
     }
 }
@@ -326,7 +351,7 @@ client.on("messageCreate", async (message) => {
             const response = await fetch(COUNT_API_URL, {
                 method: "GET",
                 headers: {
-                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API_KEY}`
                 }
             });
     
@@ -339,13 +364,13 @@ client.on("messageCreate", async (message) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${process.env.SCYTEDTV_API}`
+                    "Authorization": `Bearer ${process.env.SCYTEDTV_API_KEY}`
                 },
                 body: JSON.stringify({ count: previousCount + 1 })
             });
     
         } catch (error) {
-            console.error("Failed to update count on API:", error);
+            console.error(`Failed to update count on API:\n${error.stack}`);
         }
     }
 });
@@ -370,7 +395,7 @@ client.once("ready", async () => {
         await rest.put(Routes.applicationCommands(client.user.id), { body: commands });
         console.log("Slash commands registered successfully.");
     } catch (error) {
-        console.error("Error registering slash commands:", error);
+        console.error(`Error registering slash commands:\n${error.stack}`);
     }
 });
 
