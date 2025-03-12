@@ -43,3 +43,6 @@ You can add a domain for any of the following reasons:
 - The domain embeds X/Twitter posts.
 - The domain hosts CSAM or other dangerous content.
 - The domain hosts illegal or otherwise harmful content.
+- 
+
+Additionally, you can make a [Pull Request](https://github.com/ScytedTV-Studios/BanX/pulls) for an [Issue](https://github.com/ScytedTV-Studios/BanX/issues) if you have something you'd like to see added or changed.
