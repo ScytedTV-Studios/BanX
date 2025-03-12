@@ -14,10 +14,10 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle("Ban X: Protecting Servers Every Day")
             .setColor("#ff5050")
-            .setThumbnail("https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20Logo.jpg?raw=true")
+            .setThumbnail("https://github.com/ScytedTV-Studios/BanX/blob/master/branding/banx_logo.jpg?raw=true")
             .setDescription("**Ban X** was originally created to delete messages that contain URLs known to link to **X** (formerly **Twitter**), but you can also block the following categories: `Fake News`, `Gambling`, `NSFW`, `Scams`, and `Social`.\n\nTo disable the default **X**/**Twitter** link banning, use the </block disable:1343725446268719275> command to disable `Default`.\n\nStay up-to-date with **Ban X** updates on [Bluesky](https://go.scyted.tv/bsky/banx)!")
-            .setImage("https://raw.githubusercontent.com/ScytedTV-Studios/BanX/refs/heads/master/Branding/Ban%20X%20-%20GitHub%20Preview.jpg")
-            .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20Icon.png?raw=true' });
+            .setImage("https://github.com/ScytedTV-Studios/BanX/blob/master/branding/banx_github-preview.jpg?raw=true")
+            .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/branding/banx_icon.png?raw=true' });
 
         // for (const cmd of commandsList) {
         //     embed.addFields({ name: `${cmd.name}`, value: cmd.description, inline: false });

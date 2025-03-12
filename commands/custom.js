@@ -112,7 +112,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                         .setColor("#ff5050")
                         .setDescription(`**Custom Banned Domains**\n-# This does not include global or block list domains.\n\`${domains.join("\`, \`")}\``)
-                        .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20Icon.png?raw=true' });
+                        .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/branding/banx_icon.png?raw=true' });
                 return interaction.editReply({ embeds: [embed] });
             }
         } catch (error) {

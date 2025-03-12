@@ -63,7 +63,7 @@ module.exports = {
                     .setTitle("Block Lists")
                     .setColor("#ff5050")
                     .setDescription(`${categoryList}`)
-                    .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20Icon.png?raw=true' });
+                    .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/branding/banx_icon.png?raw=true' });
                 return interaction.editReply({ embeds: [embed] });
             }
 

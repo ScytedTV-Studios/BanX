@@ -61,7 +61,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setColor("#ff5050")
                             .setDescription(`**Banned Domains**\n-# These domains are banned globally in all servers that use **Ban X**.\n\`${domains}\`\n-# This does not include custom or block list domains.`)
-                            .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/Branding/Ban%20X%20-%20Icon.png?raw=true' })
+                            .setFooter({ text: `Ban X ◦ Version ${latestRelease}`, iconURL: 'https://github.com/ScytedTV-Studios/BanX/blob/master/branding/banx_icon.png?raw=true' })
                     ]
                 });
             } catch (error) {
