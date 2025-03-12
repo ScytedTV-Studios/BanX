@@ -109,7 +109,7 @@ async function updateServerInfo() {
                     Authorization: `Bearer ${SCYTEDTV_API}`,
                     "Content-Type": "application/json"
                 }
-            }).catch(error => console.error(`Failed to update server info for ${guildId}:`, error));
+            }).catch(error => console.error(`Failed to update server info for ${guildId}:\n${error.stack}`));
         }
     }
 }
@@ -127,7 +127,7 @@ client.on("guildUpdate", async (oldGuild, newGuild) => {
                 Authorization: `Bearer ${SCYTEDTV_API}`,
                 "Content-Type": "application/json"
             }
-        }).catch(error => console.error(`Failed to update server info for ${newGuild.id}:`, error));
+        }).catch(error => console.error(`Failed to update server info for ${newGuild.id}:\n${error.stack}`));
     }
 });
 
@@ -143,7 +143,7 @@ async function getLatestRelease() {
 
         return data.tag_name || "Unknown Version";
     } catch (error) {
-        console.error("Failed to fetch the latest release from GitHub:", error);
+        console.error(`Failed to fetch the latest release from GitHub:\n${error.stack}`);
         return "v1.3";
     }
 }
@@ -162,7 +162,7 @@ async function getCurrentCount() {
         const data = await response.json();
         return data.count ?? 0;
     } catch (error) {
-        console.error("Failed to fetch count from API:", error);
+        console.error(`Failed to fetch count from API:\n${error.stack}`);
         return 0;
     }
 }
@@ -370,7 +370,7 @@ client.on("messageCreate", async (message) => {
             });
     
         } catch (error) {
-            console.error("Failed to update count on API:", error);
+            console.error(`Failed to update count on API:\n${error.stack}`);
         }
     }
 });
@@ -395,7 +395,7 @@ client.once("ready", async () => {
         await rest.put(Routes.applicationCommands(client.user.id), { body: commands });
         console.log("Slash commands registered successfully.");
     } catch (error) {
-        console.error("Error registering slash commands:", error);
+        console.error(`Error registering slash commands:\n${error.stack}`);
     }
 });
 

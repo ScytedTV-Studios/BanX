@@ -113,7 +113,7 @@ async function getLatestRelease() {
 
         return data.tag_name || "Unknown Version";
     } catch (error) {
-        console.error("Failed to fetch the latest release from GitHub:", error);
+        console.error(`Failed to fetch the latest release from GitHub:\n${error.stack}`);
         return "v1.3";
     }
 }

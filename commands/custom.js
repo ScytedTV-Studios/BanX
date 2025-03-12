@@ -116,7 +116,7 @@ module.exports = {
                 return interaction.editReply({ embeds: [embed] });
             }
         } catch (error) {
-            console.error(`Error handling /custom command:`, error);
+            console.error(`Error handling /custom command:\n${error.stack}`);
             const embed = new EmbedBuilder()
                         .setColor("Red")
                         .setDescription(`<:crossmark:1330976664535961753> \`An error occurred. Try again later.\``);
@@ -137,7 +137,7 @@ async function getLatestRelease() {
 
         return data.tag_name || "Unknown Version";
     } catch (error) {
-        console.error("Failed to fetch the latest release from GitHub:", error);
+        console.error(`Failed to fetch the latest release from GitHub:\n${error.stack}`);
         return "v1.3";
     }
 }
