@@ -26,18 +26,18 @@ These are the sources of our additional block lists.
 
 | List Type | Domains File | Source GitHub Repo | Source URL |
 | --------- | ------------ | ------------------ | ---------- |
-| Fake News | [`DOMAINS_FAKENEWS.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_FAKENEWS.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-only/hosts) |
-| Gambling | [`DOMAINS_GAMBLING.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_GAMBLING.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-only/hosts) |
-| IP Grabber | [`DOMAINS_IP_GRABBER.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_IP_GRABBER.txt) | [`furuycom/ProtectorHosts`](https://github.com/furuycom/ProtectorHosts) | [`hosts`](https://raw.githubusercontent.com/furkun/ProtectorHosts/main/hosts) |
-| NSFW | [`DOMAINS_NSFW.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_NSFW.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-only/hosts) |
-| Scams | [`DOMAINS_SCAMS.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_SCAMS.txt) | [`jarelllama/Scam-Blocklist`](https://github.com/jarelllama/Scam-Blocklist) | [`scams.txt`](https://raw.githubusercontent.com/jarelllama/Scam-Blocklist/main/lists/wildcard_domains/scams.txt) |
-| Social | [`DOMAINS_SOCIAL.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS_SOCIAL.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/social-only/hosts) |
+| Fake News | [`FAKENEWS.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/domains/FAKENEWS.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-only/hosts) |
+| Gambling | [`GAMBLING.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/domains/GAMBLING.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-only/hosts) |
+| IP Grabber | [`IP_GRABBER.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/domains/IP_GRABBER.txt) | [`furuycom/ProtectorHosts`](https://github.com/furuycom/ProtectorHosts) | [`hosts`](https://raw.githubusercontent.com/furkun/ProtectorHosts/main/hosts) |
+| NSFW | [`NSFW.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/domains/NSFW.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-only/hosts) |
+| Scams | [`SCAMS.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/domains/SCAMS.txt) | [`jarelllama/Scam-Blocklist`](https://github.com/jarelllama/Scam-Blocklist) | [`scams.txt`](https://raw.githubusercontent.com/jarelllama/Scam-Blocklist/main/lists/wildcard_domains/scams.txt) |
+| Social | [`SOCIAL.txt`](https://github.com/ScytedTV-Studios/BanX/blob/master/domains/SOCIAL.txt) | [`StevenBlack/hosts`](https://github.com/StevenBlack/hosts) | [`hosts`](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/social-only/hosts) |
 
 *The block list domains are refreshed from the source every hour.*
 
 ## Contributions
 
-If you would like to contribute to the [DOMAINS.txt](https://github.com/ScytedTV-Studios/BanX/blob/master/DOMAINS.txt) file by adding harmful domains, make a [Pull Request](https://github.com/ScytedTV-Studios/BanX/pulls). In your Pull Request, please list the reason you are trying to ban said domain(s).
+If you would like to contribute to the [DEFAULT.txt](https://github.com/ScytedTV-Studios/BanX/blob/master/domains/DEFAULT.txt) file by adding harmful domains, make a [Pull Request](https://github.com/ScytedTV-Studios/BanX/pulls). In your Pull Request, please list the reason you are trying to ban said domain(s).
 
 You can add a domain for any of the following reasons:
 - The domain embeds X/Twitter posts.
