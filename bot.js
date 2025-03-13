@@ -368,6 +368,16 @@ client.on("messageCreate", async (message) => {
                 },
                 body: JSON.stringify({ count: previousCount + 1 })
             });
+
+            const channelLogEmbed = new EmbedBuilder()
+                .setTitle('Message deleted for containing:')
+                .setDescription(`\`\`\`json\n${matchedDomain}\`\`\``)
+                .setColor("#ff5050")
+                .setFooter({ text: `Message #${previousCount + 1}` })
+                .setTimestamp();
+    
+            const logChannel = client.channels.cache.get('1349574939732217857');
+            await logChannel.send({ embeds: [channelLogEmbed] });
     
         } catch (error) {
             console.error(`Failed to update count on API:\n${error.stack}`);
