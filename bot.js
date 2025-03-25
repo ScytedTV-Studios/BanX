@@ -19,13 +19,13 @@ const COUNT_API_URL = "https://api.scyted.tv/v2/banx/count";
 const SERVER_INFO_API = "https://api.scyted.tv/v2/banx/info/";
 
 const CATEGORY_FILES = {
-    default: "DOMAINS.txt",
-    fakenews: "DOMAINS_FAKENEWS.txt",
-    gambling: "DOMAINS_GAMBLING.txt",
-    ipgrabber: "DOMAINS_IP_GRABBER.txt",
-    nsfw: "DOMAINS_NSFW.txt",
-    scams: "DOMAINS_SCAMS.txt",
-    social: "DOMAINS_SOCIAL.txt"
+    default: "DEFAULT.txt",
+    fakenews: "FAKENEWS.txt",
+    gambling: "GAMBLING.txt",
+    ipgrabber: "IP_GRABBER.txt",
+    nsfw: "NSFW.txt",
+    scams: "SCAMS.txt",
+    social: "SOCIAL.txt"
 };
 
 const serverSettingsCache = new Map();
@@ -204,7 +204,7 @@ async function loadCategoryTries() {
 
     for (const [category, fileName] of Object.entries(CATEGORY_FILES)) {
         const trie = new Trie();
-        const filePath = path.resolve(__dirname, fileName);
+        const filePath = path.resolve(__dirname, "domains", fileName);
         if (fs.existsSync(filePath)) {
             const content = fs.readFileSync(filePath, "utf8");
             content.split("\n").map(domain => domain.trim()).filter(Boolean).forEach(domain => {
