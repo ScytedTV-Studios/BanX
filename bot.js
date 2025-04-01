@@ -237,7 +237,7 @@ async function fetchServerSettings(guildId) {
                     gambling: false,
                     ipgrabber: false,
                     nsfw: false,
-                    scams: false,
+                    scams: true,
                     social: false
                 }),
                 headers: {
