@@ -237,7 +237,7 @@ async function fetchServerSettings(guildId) {
                     gambling: false,
                     ipgrabber: false,
                     nsfw: false,
-                    scams: false,
+                    scams: true,
                     social: false
                 }),
                 headers: {
@@ -245,7 +245,7 @@ async function fetchServerSettings(guildId) {
                     "Content-Type": "application/json"
                 }
             });
-            return { default: true, fakenews: false, gambling: false, ipgrabber: false, nsfw: false, scams: false, social: false };
+            return { default: true, fakenews: false, gambling: false, ipgrabber: false, nsfw: false, scams: true, social: false };
         }
         console.error(`Error fetching settings for ${guildId}:\n${error.stack}`);
         return null;
