@@ -162,6 +162,7 @@
 789.club
 789.fun
 789.mobi
+789.sx
 789.win
 78966.app
 7897890.bet
@@ -192,6 +193,13 @@
 789clubs.vin
 789d.club
 789f.ac
+789f.ai
+789f.best
+789f.com
+789f.lat
+789f.live
+789f.love
+789f.one
 789k.club
 789v.club
 789vg.net
@@ -272,7 +280,10 @@
 8dayvn888.com
 8jbet.vin
 8k00000.com
+8k88.live
+8k88.plus
 8kbet.app
+8kbet.com
 8live.club
 8live.com
 8live.fun
@@ -462,6 +473,7 @@ api.mu88.mu
 api.mu9.club
 api.mu9.com
 api.mxvietnam.com
+api.nbet.fan
 api.nbet.vin
 api.oppa888.com
 api.oppa88888888.com
@@ -474,6 +486,8 @@ api.shbetvv.com
 api.sky88.com
 api.sky88.fun
 api.st666.win
+api.topbet.top
+api.usbet.net
 api.v79top.com
 api.v7king.com
 api.vh79.com
@@ -511,6 +525,8 @@ b29.cafe
 b29.pub
 b369.com
 b4.big88.com
+b4.big88.net
+b4.dom88.com
 b4.pum88.com
 b4.qibet.com
 b4.vibet.com
@@ -572,6 +588,7 @@ betbanh88.com
 betlixi88.net
 betlv.com
 bettingroup.net
+betvip.center
 betvisa.com
 betvisa.dog
 betvnd.cc
@@ -584,9 +601,11 @@ biendo1.com
 biendo3.com
 biendo9.com
 big88.com
+big88.net
 big88.one
 bigboss23.com
 bigboss93.com
+bin88.com
 bj288.com
 bj39.com
 bj88.estate
@@ -764,6 +783,7 @@ cmgw.2024xemwc.com
 cms.v79top.com
 cms.vh79.com
 cnmgb.007win.org
+code8k.vip
 comebet.xyz
 congdongmiosoioso.com
 conggiaitri.com
@@ -778,6 +798,7 @@ cuocbanh88.com
 cuocbanh88.net
 cuocbong.thethaofb88.com
 cuock8.com
+cuocxau188bet.com
 cwin.com
 cwin000.com
 cwin01.com
@@ -809,6 +830,7 @@ d9bet68.com
 d9bet88.com
 da88.com
 da88.pro
+da88.vip
 da88.win
 da88vn.win
 dabanh.thethaofb88.com
@@ -912,6 +934,7 @@ dltbr.com
 do99.pro
 dola88.info
 dola99.vip
+dom88.com
 don1.club
 down.lixi88.net
 down2.lixi88.net
@@ -1048,6 +1071,7 @@ fbking33.com
 fbw.11bet.us
 fc1.fcb88d.com
 fc2.fcb88d.com
+fc88.beauty
 fc88.net
 fcb8.club
 fcb8.com
@@ -1142,6 +1166,7 @@ gamebai.manclub.us
 gamebai.vin
 gamebai88.fun
 gamebaidoithuong.com.mx
+gamebaidoithuong.lat
 gamebaidoithuong.quest
 gamebaidoithuong6.com
 gamebaisumvip.net
@@ -1167,6 +1192,7 @@ gd55m.org
 gem.win
 gem1.win
 gem79.win
+gem88.com
 gem88.win
 gemwin.page
 gemwin.vip
@@ -1182,6 +1208,10 @@ gk88.xyz
 gnbet.vip
 go.12fifa2018.com
 go789.nl
+go8.lv
+go8.plus
+go8.pub
+go8.pw
 go88-vn.com
 go88.ca
 go88.cam
@@ -1231,6 +1261,7 @@ hb8875.com
 hb8887.com
 hb88p.com
 hb88vn.co
+hbet.net
 hcm66.com
 hdbet.com
 hi.oppa888.com
@@ -1288,6 +1319,7 @@ i9-bet.com
 i9.bet
 i9.hethongxacthuc.com
 i9.pro
+i9.top
 i99903.com
 i99904.com
 i99906.com
@@ -1400,6 +1432,7 @@ i9bet90.com
 i9bet91.com
 i9bet92.com
 i9bet999.com
+i9betapp.win
 i9betdl.com
 i9i9bet.com
 i9vn.com
@@ -1491,6 +1524,8 @@ k8.games
 k8.social
 k801k.com
 k81206.com
+k88.pro
+k88.win
 k89bet.com
 k8asia.com
 k8asia12.com
@@ -1693,6 +1728,8 @@ keonhacai-fun88.com
 keonhacai3.com
 keotot.net
 ketquasoso.net
+kg88.com
+kg88.shop
 khamphasampham.cc
 khuyenmai.cloud
 kimsa.us
@@ -1715,6 +1752,11 @@ kingfun1.club
 kingfun247.net
 kingfunsomot.com
 kingman.fun
+kkwin.bio
+kkwin.men
+kkwin.pro
+kkwin.pub
+kkwin.vin
 km.choi789.link
 km.choivin88.us
 km.dangkyva88.info
@@ -1785,11 +1827,13 @@ kuwinvip.com
 l4.lode88.ai
 lamgiau99.club
 ldp-sum.com
+legabet.gay
 leo88.com
 leo88.fun
 leo88.top
 lienhe22.com
 lienhe44.com
+lienminhlega.com
 link.vuabai9.com
 link123b.com
 link789club.click
@@ -1975,6 +2019,7 @@ m.w88io.com
 m.w88ok.com
 m.w88yes.com
 m1.fm88.com
+m1.max88.vip
 m1.may88d.com
 m1.tin88.bet
 m1.vin88.net
@@ -1998,6 +2043,8 @@ man.top
 man.vip
 man1.club
 man79.org
+man88.net
+man88.top
 manclub.fun
 manclub.live
 manclub.us
@@ -2013,6 +2060,7 @@ mapi.ku998.net
 mapi.seb121.net
 max10.pro
 max88.com
+max88.vip
 may88.club
 may88.com
 may88.fun
@@ -2126,16 +2174,19 @@ na99.city
 na99.pro
 nbet.club
 nbet.com
+nbet.fan
 nbet.fun
 nbet.me
 nbet.net
 nbet.site
+nbet.to
 nbet.top
 nbet.tv
 nbet.vin
 nbet.vip
 nbet.win
 nbet88.org
+nc88.net
 ne88.bet
 nearom.com
 nemo.vin
@@ -2174,6 +2225,7 @@ nhanthuong88.com
 nhat.bet
 nhat.game
 nhat.it
+nhat.vip
 nhat1.club
 nhat9.vip
 nhatvip.mobi
@@ -2190,6 +2242,7 @@ nowbetvn.com
 nt.choiwon88.info
 nuoigada.com
 nxb8.com
+o4.oxbet.in
 ok388.tv
 okcado.com
 okcado.org
@@ -2285,6 +2338,7 @@ play.top88.vn
 play.vaob52.click
 play.vic.win
 play.vip79.com
+play.vip79.top
 play.vip79.vip
 play.vuigiaitri.online
 play.win79.vip
@@ -2507,6 +2561,7 @@ sin88.us
 sin88.vip
 sin88.win
 sin88s.com
+sinbet.com
 sinbet.vip
 site.ko66vip.casino
 site.ko66vip.club
@@ -2534,6 +2589,7 @@ soc99.com
 sock.dabet.club
 sock.mu9.club
 sock.mu9.com
+sock.nbet.fan
 sock.nbet.vin
 sock.red88.com
 sock.red88.us
@@ -2546,6 +2602,8 @@ socket.debet.so
 socket.debet.uk
 socket.debet.win
 socket.hdbet.com
+socket.topbet.top
+socket.usbet.net
 soco88.com
 socvip9.club
 sodo.bond
@@ -2587,9 +2645,11 @@ st666win.us
 st666yet.site
 static.8live.com
 static.fabet.com
+static.gem88.com
 static.hi88.de
 static.lu88.com
 static.lucky88.com
+static.zo88.vip
 static2.8live.com
 static2.lucky88.com
 static3.lucky88.com
@@ -2615,6 +2675,7 @@ sun52.tv
 sun6.win
 sun88.online
 sungame.store
+sunwin.pro
 sunwinvn.club
 sure168.asia
 sut88.com
@@ -2876,6 +2937,7 @@ top88.vn
 top88vn.club
 top88vn.net
 top9nhacai.top
+topbet.top
 topdoithuong.net
 topgamebai.biz
 topnhacaihot.com
@@ -2889,6 +2951,7 @@ tourghepmienbac.net
 tpviet66.com
 tpviet88.com
 traiga.vn
+trang188vn.com
 trangchu.life
 trangweb.co
 tructiepdaga.info
@@ -2918,6 +2981,7 @@ uk88.com
 uk88.top
 uk88.vip
 upanh.vn88.com
+usbet.net
 uu88.com
 uu88.now
 uu8814.net
@@ -2985,6 +3049,7 @@ vi.sol86.com
 vi68.org
 vibet.com
 vic.win
+vic88.com
 vicplay.io
 victorwin555.com
 vicwin.vip
@@ -3008,6 +3073,7 @@ vip.v99win.app
 vip11.club
 vip130130.com
 vip79.com
+vip79.top
 vip79.vip
 vip79.win
 vip79gamebai.vip
@@ -3099,6 +3165,7 @@ vntop88.com
 vnvwbet.com
 vnvwin.com
 vnxoso-web.com
+vpn8k.top
 vscore.bet
 vscore.online
 vscore.pro
@@ -3109,6 +3176,7 @@ vsports88.asia
 vsports88.com
 vstar79.com
 vu88.com
+vu88.net
 vua2.club
 vua88.app
 vua88.biz
@@ -3233,6 +3301,7 @@ web.macauclub.fun
 web.mayclub.net
 web.nemo.vin
 web.nhatvip.net
+web.sunwin.pro
 web.taiv8.com
 web.taiv8.top
 web.top88.vip
@@ -3287,6 +3356,8 @@ wp.choigiaitri.net
 wp.debet79.info
 wp.hdbet.com
 wp.mibet.net
+wp.nbet.fan
+wp.nbet.to
 wp.nbet.vin
 wp.red88.com
 wp.red88.us
@@ -3295,6 +3366,7 @@ wp.red88.vip
 wp.rikvip.tv
 wp.sky88.com
 wp.sky88.fun
+wp.topbet.top
 ww88.club
 ww88club.com
 www-c54.com
@@ -3881,6 +3953,7 @@ xo88bet.com
 xocdia88.click
 xocdia88.es
 xocdia88.video
+xocdiaonline.cool
 xoso12345.com
 xoso345.com
 xoso55.com
@@ -3913,6 +3986,7 @@ yo88.tv
 yo88.win
 yo88vn.com
 yo88vn.us
+youwevnak.kg88.shop
 yule12888.com
 yylive.top
 yylive.tv
@@ -3938,6 +4012,7 @@ zo10.win
 zo2.win
 zo88.com
 zo88.org
+zo88.vip
 zom8.club
 zoplay.top
 zowin.tv
