@@ -3240,3 +3240,4 @@ extensions-discovery-images.twitch.tv
 panels.twitch.tv
 pinpages.alwaysdata.net
 allotalk.com
+sniffies.com
